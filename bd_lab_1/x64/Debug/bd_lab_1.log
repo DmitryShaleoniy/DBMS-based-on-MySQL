@@ -1,0 +1,7 @@
+﻿  bd_lab_1.cpp
+C:\Users\jjjjj\DBMS-based-on-MySQL\bd_lab_1\bd_lab_1.cpp(47,28): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\jjjjj\DBMS-based-on-MySQL\bd_lab_1\bd_lab_1.cpp(49,30): warning C4244: '=': conversion from 'uint64_t' to 'int', possible loss of data
+C:\Users\jjjjj\DBMS-based-on-MySQL\bd_lab_1\bd_lab_1.cpp(54,30): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+  bd_lab_1.vcxproj -> C:\Users\jjjjj\DBMS-based-on-MySQL\x64\Debug\bd_lab_1.exe
+  "pwsh.exe" не является внутренней или внешней
+  командой, исполняемой программой или пакетным файлом.
