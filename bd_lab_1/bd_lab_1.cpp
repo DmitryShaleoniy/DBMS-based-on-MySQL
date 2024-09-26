@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <mysql.h>
+#include <algorithm>
 
 MYSQL* conn;
 MYSQL_FIELD* field;
@@ -10,6 +11,11 @@ std::string query;
 int num_fields;
 int num_rows;
 int* LensFields = nullptr;
+
+std::string ToUpper(std::string query) {
+	std::transform(query.begin(), query.end(), query.begin(), ::towupper);
+	return query;
+}
 
 int main()
 {
@@ -26,7 +32,7 @@ int main()
 				std::getline(std::cin, query);
 				continue;
 			}
-			if (query.compare(0, 6, "SELECT") != 0) {
+			if (ToUpper(query).compare(0, 6, "SELECT") != 0) {
 				std::cout << "Done!" << std::endl;
 			}
 			else {
@@ -47,10 +53,17 @@ int main()
 					LensFields[i] = strlen((field->name));
 				}
 				num_rows = mysql_num_rows(res);
+
+
 				for (int j = 0; j < num_rows; j++) {
 					row = mysql_fetch_row(res);
 					for (int i = 0; i < num_fields; i++) {
-						if (strlen(row[i]) > LensFields[i]) {
+						if (row[i] == nullptr) {
+							if (4 > LensFields[i]) {
+								LensFields[i] = 4;
+							}
+						}
+						else if (strlen(row[i]) > LensFields[i]) {
 							LensFields[i] = strlen(row[i]);
 						}
 					}
@@ -77,10 +90,19 @@ int main()
 				//вывод тела (Br) - кортежей!
 				for (int k = 0; k < num_rows; k++) {
 					row = mysql_fetch_row(res);
+					
 					for (int i = 0; i < num_fields; i++) {
-						std::cout << row[i] << " ";
-						for (int j = 0; j < LensFields[i] - strlen(row[i]); j++) {
-							std::cout << " ";
+						if (row[i] == nullptr) {
+							std::cout << "NULL" << " ";
+							for (int j = 0; j < LensFields[i] - 4; j++) {
+								std::cout << " ";
+							}
+						}
+						else {
+							std::cout << row[i] << " ";
+							for (int j = 0; j < LensFields[i] - strlen(row[i]); j++) {
+								std::cout << " ";
+							}
 						}
 						std::cout << "|";
 					}
